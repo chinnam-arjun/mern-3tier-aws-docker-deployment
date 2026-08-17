@@ -6,7 +6,7 @@ This repository documents the process of containerizing and deploying a MERN (Mo
 
 It covers the architecture, containerization process, AWS infrastructure setup, networking configuration, deployment workflow, real-world troubleshooting scenarios, and security considerations involved in taking a MERN application from source code to a running, publicly accessible deployment on AWS.
 
-This is a **deployment and DevOps documentation repository** — it does not contain the application's source code. The focus here is on *how the application was containerized, deployed, configured, tested, and troubleshot*, not on the application logic itself.
+This is a **deployment and DevOps documentation repository** — it does not contain the application's source code. The focus here is on _how the application was containerized, deployed, configured, tested, and troubleshot_, not on the application logic itself.
 
 ---
 
@@ -53,16 +53,19 @@ This repository focuses exclusively on the containerization and AWS deployment p
 ```
 
 ### Presentation Tier — React
+
 - Serves the user interface
 - Sends API requests to the backend
 - Handles client-side routing
 
 ### Application Tier — Node.js + Express
+
 - Exposes REST APIs
 - Handles authentication and business logic
 - Communicates with the database
 
 ### Data Tier — MongoDB Atlas
+
 - Stores persistent application data
 - Managed, externally hosted database service
 
@@ -70,13 +73,13 @@ This repository focuses exclusively on the containerization and AWS deployment p
 
 ## Technology Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React |
-| Backend | Node.js, Express |
-| Database | MongoDB Atlas |
-| Containerization | Docker |
-| Compute | AWS EC2 |
+| Layer                 | Technology          |
+| --------------------- | ------------------- |
+| Frontend              | React               |
+| Backend               | Node.js, Express    |
+| Database              | MongoDB Atlas       |
+| Containerization      | Docker              |
+| Compute               | AWS EC2             |
 | Networking / Security | AWS Security Groups |
 
 ---
@@ -158,16 +161,19 @@ Application Repository
 The application was split into independently containerized components.
 
 **Frontend:**
+
 ```
 React application → Production build → Web server → Docker image → Frontend container
 ```
 
 **Backend:**
+
 ```
 Node.js application → Dependency installation → Express server → Docker image → Backend container
 ```
 
 Topics covered:
+
 - Base images used for frontend and backend
 - Multi-stage Dockerfile builds (if used)
 - Dependency installation strategy
@@ -201,6 +207,7 @@ EC2 Instance
 ```
 
 Steps followed:
+
 1. Launched EC2 instance (free-tier eligible)
 2. Configured Security Group (inbound/outbound rules)
 3. Connected via SSH
@@ -233,6 +240,7 @@ Docker Host
 **Security Group rules:** which ports were opened and why (e.g. 22 for SSH, 80/3000 for frontend, 5000 for backend API).
 
 **Docker port mapping:**
+
 ```
 EC2 Port → Docker Host Port → Container Port
 ```
@@ -278,6 +286,7 @@ This section documents real issues encountered during deployment, not just the f
 **Symptom:** Frontend requests were not reaching the backend.
 
 **Investigation:**
+
 - Checked running containers (`docker ps`)
 - Checked container logs (`docker logs <container>`)
 - Checked exposed/mapped ports
@@ -294,6 +303,7 @@ This section documents real issues encountered during deployment, not just the f
 **Symptom:** Application worked when accessed from inside the EC2 instance but was unreachable externally.
 
 **Investigation:**
+
 - Verified Docker port mapping (`-p host:container`)
 - Verified Security Group inbound rules for the relevant port
 - Verified the application was listening on the correct port inside the container
@@ -306,6 +316,7 @@ This section documents real issues encountered during deployment, not just the f
 ### 3. Container Running but API Failing
 
 **Investigation commands used:**
+
 ```bash
 docker ps
 docker logs <container>
@@ -317,8 +328,6 @@ docker exec -it <container> sh
 **Resolution:** [Describe the actual fix.]
 
 ---
-
-### 4. [Add further scenarios as you encounter them]
 
 ---
 
@@ -332,6 +341,7 @@ docker exec -it <container> sh
 - SSH access restricted where possible
 
 Example of how credentials are referenced (never the real values):
+
 ```
 MONGODB_URI=<your-mongodb-connection-string>
 ```
@@ -340,15 +350,14 @@ MONGODB_URI=<your-mongodb-connection-string>
 
 ## Screenshots
 
-| Screenshot | Description |
-|---|---|
-| `screenshots/architecture.png` | High-level architecture |
-| `screenshots/ec2-instance.png` | Running EC2 instance |
-| `screenshots/security-group.png` | Security Group configuration |
-| `screenshots/docker-ps.png` | Running containers on EC2 |
-| `screenshots/docker-images.png` | Built Docker images |
-| `screenshots/application.png` | Deployed application in browser |
-| `screenshots/mongodb-atlas.png` | MongoDB Atlas network access / cluster |
+| Screenshot                                 | Description                        |
+| ------------------------------------------ | ---------------------------------- |
+| `screenshots/architecture.png`             | High-level architecture            |
+| `screenshots/ec2.png`                      | Running EC2 instance               |
+| `screenshots/publishing-images-to-ecr.png` | pushing local docker images to ECR |
+| `screenshots/docker-containers.png`        | Running containers on EC2          |
+| `screenshots/docker-images.png`            | Built Docker images                |
+| `screenshots/application.png`              | Deployed application in browser    |
 
 ---
 
@@ -413,11 +422,7 @@ mern-3tier-aws-docker-deployment/
 │   ├── docker-containers.png
 │   └── application.png
 │
-└── LICENSE
+
 ```
 
 ---
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
